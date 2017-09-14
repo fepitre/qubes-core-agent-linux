@@ -24,8 +24,6 @@ import logging
 import dnf
 import subprocess
 
-PLUGIN_CONF = 'qubes-hooks'
-
 class QubesHooks(dnf.Plugin):
     name = 'qubes-hooks'
 
@@ -35,7 +33,7 @@ class QubesHooks(dnf.Plugin):
         self.log = logging.getLogger('dnf')
 
     def transaction(self):
-        config = self.read_config(self.base.conf, PLUGIN_CONF)
+        config = self.read_config(self.base.conf)
 
         if config.getboolean('main', 'notify-updates'):
             # Get all updates available _before_ this transaction
