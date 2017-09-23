@@ -35,7 +35,10 @@ class QubesHooks(dnf.Plugin):
         self.log = logging.getLogger('dnf')
 
     def transaction(self):
-        config = self.read_config(self.base.conf, PLUGIN_CONF)
+        try:
+            config = self.read_config(self.base.conf, PLUGIN_CONF)
+        except:
+            config = self.read_config(self.base.conf)
 
         if config.getboolean('main', 'notify-updates'):
             # Get all updates available _before_ this transaction
