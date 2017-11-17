@@ -471,11 +471,11 @@ sed 's/^net.ipv4.ip_forward.*/#\0/'  -i /etc/sysctl.conf
 %systemd_post qubes-qrexec-agent.service
 
 %post thunar 
-# There is no system-wide Thunar custom actions. There is only a default
-# file and a user file created from the default one. Qubes actions need
-# to be placed after all already defined actions and before </actions>
-# the end of file.
 if [ "$1" = 1 ]; then
+  # There is no system-wide Thunar custom actions. There is only a default
+  # file and a user file created from the default one. Qubes actions need
+  # to be placed after all already defined actions and before </actions>
+  # the end of file.
   if [ -f /etc/xdg/Thunar/uca.xml ] ; then
     cp -p /etc/xdg/Thunar/uca.xml{,.bak}
     sed -i '$e cat /usr/lib/qubes/uca_qubes.xml' /etc/xdg/Thunar/uca.xml
@@ -483,6 +483,30 @@ if [ "$1" = 1 ]; then
   if [ -f /home/user/.config/Thunar/uca.xml ] ; then
     cp -p /home/user/.config/Thunar/uca.xml{,.bak}
     sed -i '$e cat /usr/lib/qubes/uca_qubes.xml' /home/user/.config/Thunar/uca.xml
+  fi
+
+  # Disable Thunar thumbnails in the case where XFCE desktop is installed
+  # on another Qubes template otherwise it is disabled by default (see misc/thunar.xml)
+  if [ -f /home/user/.config/xfce4/xfconf/xfce-perchannel-xml/thunar.xml ]; then
+    if grep -q "misc-thumbnail-mode"; then
+      sed -i '/name="misc-thumbnail-mode"/c\<property name="misc-thumbnail-mode" type="string" value="THUNAR_THUMBNAIL_MODE_NEVER"\/>' \
+        /home/user/.config/xfce4/xfconf/xfce-perchannel-xml/thunar.xml
+    else
+      sed -i '$e echo "  <property name="misc-thumbnail-mode" type="string" value="THUNAR_THUMBNAIL_MODE_NEVER"\/>"' \
+        /home/user/.config/xfce4/xfconf/xfce-perchannel-xml/thunar.xml
+    fi
+  fi
+
+  # Hide XFCE power manager tray-icon
+  if [ -f /etc/xdg/xfce4/xfconf/xfce-perchannel-xml/xfce4-power-manager.xml ]; then
+    sed -i 's/<property name=show-tray-icon type=bool value=true/<property name=show-tray-icon type=bool value=false/g' \
+	/etc/xdg/xfce4/xfconf/xfce-perchannel-xml/xfce4-power-manager.xml
+  fi
+  # Do it also for user's home in the case where XFCE desktop is installed
+  # on another Qubes template
+  if [ -f /home/user/.config/xfce4/xfconf/xfce-perchannel-xml/xfce4-power-manager.xml ]; then
+    sed -i 's/<property name=show-tray-icon type=bool value=true/<property name=show-tray-icon type=bool value=false/g' \
+	/home/user/.config/xfce4/xfconf/xfce-perchannel-xml/xfce4-power-manager.xml
   fi
 fi
 
@@ -712,6 +736,7 @@ rm -f %{name}-%{version}
 %files thunar
 /usr/lib/qubes/qvm-actions.sh
 /usr/lib/qubes/uca_qubes.xml
+/etc/xdg/xfce4/xfconf/xfce-perchannel-xml/thunar.xml
 
 %files dom0-updates
 %dir %attr(0775,user,user) /var/lib/qubes/dom0-updates
