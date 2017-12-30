@@ -134,7 +134,6 @@ usr/lib/qubes/show-hide-nm-applet.sh
 usr/lib/qubes-bind-dirs.d/30_cron.conf
 usr/lib/tmpfiles.d/qubes-core-agent-linux.conf
 usr/share/glib-2.0/schemas/org.gnome.nautilus.gschema.override
-usr/share/glib-2.0/schemas/10_qubes-core-agent.gschema.override
 usr/share/kde4/services/qvm-copy.desktop
 usr/share/kde4/services/qvm-move.desktop
 usr/share/kde4/services/qvm-dvm.desktop
