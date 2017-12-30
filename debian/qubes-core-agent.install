@@ -184,3 +184,4 @@ lib/modules-load.d/qubes-misc.conf
 etc/dhclient.d/qubes-setup-dnat-to-ns.sh
 usr/bin/qvm-move-to-vm
 usr/lib/qubes/qrexec-client-vm
+usr/lib/qubes/qrexec_client_vm
