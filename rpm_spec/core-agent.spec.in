@@ -132,7 +132,7 @@ Requires:   zenity
 Requires:   qubes-core-agent-qrexec
 Requires:   qubes-libvchan
 Requires:   qubes-db-vm
-%if 0%{fedora} >= 23
+%if 0%{?fedora} >= 23
 Requires:   python3-dnf-plugins-qubes-hooks
 %else
 Requires:   python2-dnf-plugins-qubes-hooks
@@ -167,7 +167,7 @@ DNF plugin for Qubes specific post-installation actions:
  * notify dom0 that updates were installed
  * refresh applications shortcut list
 
-%if 0%{fedora} >= 23
+%if 0%{?fedora} >= 23
 %package -n python3-dnf-plugins-qubes-hooks
 Summary:        DNF plugin for Qubes specific post-installation actions
 BuildRequires: python3-devel
@@ -674,7 +674,7 @@ rm -f %{name}-%{version}
 %files -n python2-dnf-plugins-qubes-hooks
 %{python2_sitelib}/dnf-plugins/*
 
-%if 0%{fedora} >= 23
+%if 0%{?fedora} >= 23
 %files -n python3-dnf-plugins-qubes-hooks
 %{python3_sitelib}/dnf-plugins/*
 %endif
