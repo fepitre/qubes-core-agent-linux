@@ -708,7 +708,7 @@ ustar_rd (int fd, struct file_header * untrusted_hdr, char *buf, struct stat * s
         // Split the path in directories and recompose it incrementally
 	char * last_token = strtok(dirbuf,"/");
 	char * token = strtok(NULL, "/");
-	int len_last_token = 0;
+	size_t len_last_token = 0;
 	while (token != NULL) {
 
 #ifdef DEBUG
@@ -766,7 +766,6 @@ ustar_rd (int fd, struct file_header * untrusted_hdr, char *buf, struct stat * s
 				return MEMORY_ALLOC_FAILED;
 			
 			memcpy(dirs_headers_sent[n_dirs-1], path, strlen(path)+1);
-			dirs_headers_sent[n_dirs+strlen(path)] = '\0';
 
                         // Initialize the qfile headers for the current directory path
 			dir_header.namelen = strlen(path)+1;

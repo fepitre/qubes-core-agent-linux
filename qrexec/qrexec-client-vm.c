@@ -135,10 +135,10 @@ int main(int argc, char **argv)
     trigger_fd = connect_unix_socket(QREXEC_AGENT_TRIGGER_PATH);
 
     memset(&params, 0, sizeof(params));
-    strncpy(params.service_name, argv[2], sizeof(params.service_name) - 1);
+    strncpy(params.service_name, argv[optind+1], sizeof(params.service_name) - 1);
 
-    convert_target_name_keyword(argv[1]);
-    strncpy(params.target_domain, argv[1],
+    convert_target_name_keyword(argv[optind]);
+    strncpy(params.target_domain, argv[optind],
             sizeof(params.target_domain) - 1);
 
     snprintf(params.request_id.ident,
