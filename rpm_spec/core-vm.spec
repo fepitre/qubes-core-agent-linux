@@ -179,7 +179,6 @@ DNF plugin for Qubes specific post-installation actions:
 %package -n python3-dnf-plugins-qubes-hooks
 Summary:        DNF plugin for Qubes specific post-installation actions
 BuildRequires: python3-devel
-%{?python_provide:%python_provide python3-dnf-plugins-qubes-hooks}
 
 %description -n python3-dnf-plugins-qubes-hooks
 DNF plugin for Qubes specific post-installation actions:
@@ -191,13 +190,14 @@ DNF plugin for Qubes specific post-installation actions:
 %package -n python34-dnf-plugins-qubes-hooks
 Summary:        DNF plugin for Qubes specific post-installation actions
 BuildRequires: python34-devel
-%{?python_provide:%python_provide python34-dnf-plugins-qubes-hooks}
 
 %description -n python34-dnf-plugins-qubes-hooks
 DNF plugin for Qubes specific post-installation actions:
  * notify dom0 that updates were installed
  * refresh applications shortcut list
 %endif
+
+%{?python_provide:%python_provide python%{python3_pkgversion}-dnf-plugins-qubes-hooks}
 
 %package -n qubes-core-agent-thunar
 Summary: Thunar support for Qubes VM tools
