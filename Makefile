@@ -300,7 +300,9 @@ install-common: install-doc
 	install -m 0644 qubes-rpc/*_nautilus.py $(DESTDIR)/usr/share/nautilus-python/extensions
 
 ifeq ($(findstring CentOS,$(shell cat /etc/redhat-release)),)
+ifneq ($(filter 25 26 27,$(shell awk '{print $3}' /etc/fedora-release)),)
 	install -D -m 0644 misc/dconf-profile-user $(DESTDIR)/etc/dconf/profile/user
+endif
 endif
 	install -D -m 0644 misc/dconf-db-local-dpi $(DESTDIR)/etc/dconf/db/local.d/dpi
 
