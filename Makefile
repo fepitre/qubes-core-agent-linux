@@ -121,7 +121,7 @@ install-init:
 	install -d $(DESTDIR)$(LIBDIR)/qubes/init
 	# FIXME: do a source code move vm-systemd/*.sh to init/
 	# since those scripts are shared between sysvinit and systemd.
-	install -m 0755 init/*.sh vm-systemd/*.sh $(DESTDIR)$(LIBDIR)/qubes/init/
+	install -m 0755 init/*.sh vm-systemd/*.sh vm-systemd/*.py $(DESTDIR)$(LIBDIR)/qubes/init/
 	install -m 0644 init/functions $(DESTDIR)$(LIBDIR)/qubes/init/
 
 # Systemd service files
@@ -135,6 +135,8 @@ install-systemd: install-init
 	install -m 0644 vm-systemd/qubes-*.timer $(DESTDIR)$(SYSLIBDIR)/systemd/system/
 	install -m 0644 vm-systemd/75-qubes-vm.preset $(DESTDIR)$(SYSLIBDIR)/systemd/system-preset/
 	install -m 0644 vm-systemd/qubes-core.conf $(DESTDIR)$(SYSLIBDIR)/modules-load.d/
+
+	mv $(DESTDIR)$(SYSLIBDIR)/systemd/system/org.freedesktop.qubes.Notifications.service $(DESTDIR)/usr/share/dbus-1/services/
 
 install-sysvinit: install-init
 	install -d $(DESTDIR)/etc/init.d

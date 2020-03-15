@@ -1,0 +1,4 @@
+[D-BUS Service]
+Name=org.freedesktop.Notifications
+Exec=/usr/lib/qubes/init/qubes-notifyd.py
+SystemdService=qubes-notifyd.service
