@@ -7,6 +7,7 @@ ifeq ($(PACKAGE_SET),vm)
   endif
 
   ARCH_BUILD_DIRS := archlinux
+  EBUILD_FILES := gentoo/qubes-core-agent-linux.ebuild
 endif
 
 source-debian-quilt-copy-in: VERSION = $(shell cat $(ORIG_SRC)/version)
