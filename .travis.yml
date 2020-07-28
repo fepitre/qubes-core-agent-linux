@@ -1,37 +1,10 @@
 sudo: required
 dist: bionic
 language: python
-python: '3.5'
-install: git clone https://github.com/QubesOS/qubes-builder ~/qubes-builder
+python: '3.6'
+install: git clone -b travis-gentoo https://github.com/fepitre/qubes-builder ~/qubes-builder
 script: ~/qubes-builder/scripts/travis-build
 env:
- - DISTS_VM=fc29 USE_QUBES_REPO_VERSION=4.1 USE_QUBES_REPO_TESTING=1
- - DISTS_VM=fc30 USE_QUBES_REPO_VERSION=4.1 USE_QUBES_REPO_TESTING=1
- - DISTS_VM=stretch USE_QUBES_REPO_VERSION=4.1 USE_QUBES_REPO_TESTING=1
- - DISTS_VM=buster USE_QUBES_REPO_VERSION=4.1 USE_QUBES_REPO_TESTING=1
- - DISTS_VM=centos7 USE_QUBES_REPO_VERSION=4.1 USE_QUBES_REPO_TESTING=1
-
-jobs:
-  include:
-    - python: '3.6'  # needs to match bionic
-      virtualenv:
-        system_site_packages: true
-      install:
-        - sudo apt-get -y install python3-gi gir1.2-gtk-3.0
-        - pip install --quiet -r ci/requirements.txt
-      env: TESTS_ONLY=1
-      script:
-       - ./run-tests
-       - shellcheck -e SC1117 $(grep -l '^#!/bin/\(ba\)\?sh' $(git ls-files))
-      after_success:
-       - codecov
-    - stage: deploy
-      python: '3.5'
-      env: DIST_DOM0=fc31 TESTS_ONLY=
-      script: ~/qubes-builder/scripts/travis-deploy
-
-
-branches:
-  except:
-    - /.*_.*/
-    - build
+ - DISTS_VM=gentoo GENTOO_MIRROR=https://mirror.notset.fr/gentoo/qubes/gnome GENTOO_MIRROR_KEY=9FA64B92F95E706BF28E2CA6484010B5CDC576E2
+ - DISTS_VM=gentoo+minimal GENTOO_MIRROR=https://mirror.notset.fr/gentoo/qubes/minimal GENTOO_MIRROR_KEY=9FA64B92F95E706BF28E2CA6484010B5CDC576E2
+ - DISTS_VM=gentoo+xfce GENTOO_MIRROR=https://mirror.notset.fr/gentoo/qubes/xfce GENTOO_MIRROR_KEY=9FA64B92F95E706BF28E2CA6484010B5CDC576E2
