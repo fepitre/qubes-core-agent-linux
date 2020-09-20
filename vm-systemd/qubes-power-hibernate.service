@@ -1,0 +1,13 @@
+
+[Unit]
+Description=Hibernate dom0 from within a VM
+DefaultDependencies=no
+Before=hibernate.target
+
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/qrexec-client-vm dom0 qubes.Hibernate
+TimeoutStartSec=0
+
+[Install]
+WantedBy=hibernate.target

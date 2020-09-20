@@ -1,0 +1,13 @@
+
+[Unit]
+Description=Shutdown dom0 from within a VM
+DefaultDependencies=no
+Before=shutdown.target
+
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/qrexec-client-vm dom0 qubes.Shutdown
+TimeoutStartSec=0
+
+[Install]
+WantedBy=shutdown.target

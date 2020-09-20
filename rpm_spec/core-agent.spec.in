@@ -918,6 +918,10 @@ The Qubes core startup configuration for SystemD init.
 /lib/systemd/system/tmp.mount.d/30_qubes.conf
 /usr/lib/systemd/user/pulseaudio.service.d/30_qubes.conf
 /usr/lib/systemd/user/pulseaudio.socket.d/30_qubes.conf
+/lib/systemd/system/qubes-power-hibernate.service
+/lib/systemd/system/qubes-power-reboot.service
+/lib/systemd/system/qubes-power-shutdown.service
+/lib/systemd/system/qubes-power-suspend.service
 
 %post systemd
 

@@ -1,0 +1,13 @@
+
+[Unit]
+Description=Suspend dom0 from within a VM
+DefaultDependencies=no
+Before=suspend.target
+
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/qrexec-client-vm dom0 qubes.Suspend
+TimeoutStartSec=0
+
+[Install]
+WantedBy=suspend.target
